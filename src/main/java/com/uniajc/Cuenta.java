@@ -52,12 +52,36 @@ public class Cuenta {
         this.comisionMensual = comisionMensual;
     }
 
-    public void consignar(float cantidad) { }
+    public void consignar(float cantidad) {
+        saldo += cantidad;
+        numeroConsignaciones++;
+    }
 
-    public void retirar(float cantidad) { }
+    public void retirar(float cantidad) {
+        if (cantidad <= saldo) {
+            saldo -= cantidad;
+            numeroRetiros++;
+        } else {
+            System.out.println("Fondos insuficientes. El valor a retirar no puede superar el saldo.");
+        }
+    }
 
-    public void calcularInteres() { }
+    public void calcularInteres() {
+        float interesMensual = saldo * (tasaAnual / 100f / 12f);
+        saldo += interesMensual;
+    }
 
-    public void extractoMensual() { }
+    public void extractoMensual() {
+        saldo -= comisionMensual;
+        calcularInteres();
+    }
+
+    public void imprimir() {
+        System.out.println("Saldo: " + saldo);
+        System.out.println("Número de consignaciones: " + numeroConsignaciones);
+        System.out.println("Número de retiros: " + numeroRetiros);
+        System.out.println("Tasa anual: " + tasaAnual + "%");
+        System.out.println("Comisión mensual: " + comisionMensual);
+    }
 
 }
